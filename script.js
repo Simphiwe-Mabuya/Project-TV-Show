@@ -6,7 +6,7 @@ function setup() {
   
   allEpisodes.map((episode) => {
     const episodeHTML = `
-    <div class="episode">
+    <div id="container" class="episode">
     <h3>${episode.name}</h3>
     <p><strong>-S0${episode.season}E0${episode.number}</strong></P>
     <img src="${episode.image.medium}" alt="${episode.name}">
