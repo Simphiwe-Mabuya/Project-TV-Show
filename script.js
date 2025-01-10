@@ -8,6 +8,9 @@ function setup() {
     const episodeHTML = `
     <div class="episode">
     <h3>${episode.name}</h3>
+    <p class="season-episode"><strong>-S0${episode.season}E0${episode.number}</strong></P>
+    <img src="${episode.image.medium}" alt="${episode.name}">
+    <div class="summary">${episode.summary}</div>
     </div>
     `;
 
