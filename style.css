@@ -19,3 +19,7 @@
 .episode h3 {
   text-align: center;
 }
+
+.episode p a {
+  text-decoration: none;
+} 
