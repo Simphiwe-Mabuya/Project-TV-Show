@@ -6,7 +6,7 @@ function setup() {
   
   allEpisodes.map((episode) => {
     const episodeHTML = `
-    <div id="grid-container" class="episode">
+    <div class="episode">
     <h3>${episode.name}<small><bold> : </bold>S0${episode.season}E0${episode.number}</small></h3>
     <img src="${episode.image.medium}" alt="${episode.name}">
     <div class="summary">${episode.summary}</div>
