@@ -1,10 +1,13 @@
 #root {
   color: black;
+  display: grid; /* Make the root a grid container */
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  justify-items: center;
+  gap: 10px;
 }
 
 .episode {
-  width: 25%;
-  margin-bottom: 20px;
+  width: 70%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
