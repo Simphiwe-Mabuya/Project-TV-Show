@@ -4,7 +4,7 @@ function setup() {
   let episodes = document.getElementById("root");
   episodes.innerHTML = '';
   
-  allEpisodes.forEach((episode) => {
+  allEpisodes.map((episode) => {
     const episodeHTML = `
     <div class="episode">
     <h3>${episode.name}</h3>
