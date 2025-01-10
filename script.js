@@ -1,6 +1,6 @@
 //You can edit ALL of the code here
 function setup() {
-  const allEpisodes = getAllEpisodes();
+  const allEpisodes = getAllEpisodes(); // call the function to get all episodes
   let episodes = document.getElementById("root");
   episodes.innerHTML = '';
   
