@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-top: 6rem;
+  margin-top: 2rem;
 }
 /*am stting up the root container so i can have the space for the heading and search bar*/
 .episode-card{
