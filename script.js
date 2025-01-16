@@ -36,7 +36,16 @@ if (input) {
       return;
     }
 
-  }
+
+    const filteredEpisodes = allEpisodes.filter((episode) => {
+
+      const formattedString = `S0${episode.season}E0${episode.number} - ${episode.name}`.toLowerCase();
+
+      return formattedString.includes(searchTerm);
+    });
+
+    displayEpisodes(filteredEpisodes);
+  });
 }
  
 
