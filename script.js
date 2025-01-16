@@ -25,11 +25,11 @@ function displayEpisodes(episodes) {
 const input = document.querySelector("#q");
 
 if (input) {
+
   input.addEventListener("input", function () {
-    const searchTerm = input.ariaValueMax.toLowerCase();
+    const searchTerm = input.value.toLowerCase();
 
     const allEpisodes = getAllEpisodes();
-
 
     if(!allEpisodes || allEpisodes.length === 0) {
       console.error("No episodes found.");
