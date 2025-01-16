@@ -25,7 +25,14 @@ function displayEpisodes(episodes) {
 const input = document.querySelector("#q");
 
 if (input) {
-  
+  input.addEventListener("input", function () {
+    const searchTerm = input.ariaValueMax.toLowerCase();
+
+    const allEpisodes = getAllEpisodes();
+
+
+
+  }
 }
  
 
