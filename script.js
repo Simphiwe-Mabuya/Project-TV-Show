@@ -22,6 +22,34 @@ function displayEpisodes(episodes) {
   });
 }
 
+//Drop down function
+function setup() {
+  const allEpisodes = getAllEpisodes(); // here i am fetshing all the episodes
+  const dropdown = document.getElementById("showDropDown");
+
+  // Populate dropdown
+  dropdown.innerHTML = '<option value="all">All Episodes</option>' +
+    allEpisodes.map((episode) => {
+      const code = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
+      return `<option value="${code}">${code} - ${episode.name}</option>`;
+    }).join(''); //This where i am populating the drop down with the required format,i used map() to iterate over the episode array and execute the episode select
+                 // i also used the join  to allow the strings chosen by map to be joined into a single string without any parameters, the episode season and the episode number string.
+  
+  dropdown.addEventListener("change", () => {//This is the event listener for the drop down, 
+    const selected = dropdown.value;
+    const episodesToShow = selected === "all"
+      ? allEpisodes
+      : allEpisodes.filter((ep) => `S${String(ep.season).padStart(2, "0")}E${String(ep.number).padStart(2, "0")}` === selected);
+    displayEpisodes(episodesToShow);
+  });
+
+  displayEpisodes(allEpisodes); // Show all episodes by default
+}
+
+ 
+
+ 
+//search functionality
 const input = document.querySelector("#q");
 
 if (input) {
@@ -47,6 +75,9 @@ if (input) {
     displayEpisodes(filteredEpisodes);
   });
 }
+
+// dropdown
+
  
 //what i did in the search functiolanlity was: 
 //i selected the input element id "q";
