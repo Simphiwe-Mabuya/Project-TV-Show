@@ -31,6 +31,10 @@ if (input) {
     const allEpisodes = getAllEpisodes();
 
 
+    if(!allEpisodes || allEpisodes.length === 0) {
+      console.error("No episodes found.");
+      return;
+    }
 
   }
 }
