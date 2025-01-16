@@ -23,6 +23,10 @@ function displayEpisodes(episodes) {
 }
 
 const input = document.querySelector("#q");
+
+if (input) {
+  
+}
  
 
 
