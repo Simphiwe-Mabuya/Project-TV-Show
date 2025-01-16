@@ -48,6 +48,13 @@ if (input) {
   });
 }
  
-
+//what i did in the search functiolanlity was: 
+//i selected the input element id "q";
+//I used an if stament to check if the input element exist in the DOM
+//Added an Event listner
+//I called back the the getAllEpisode Function to get a list of all episodes.
+//I check if the list of episodes is empty or undefined.
+//Filtered my episodes according to the requiremnts. 
+// I called back the display epidoes function to sho only filtered episodes 
 
 window.onload = setup; // Call setup when the window loads
