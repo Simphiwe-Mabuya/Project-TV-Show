@@ -1,92 +1,161 @@
-function setup() {
-  const allEpisodes = getAllEpisodes(); // Call the function to get all episodes
-  displayEpisodes(allEpisodes); // Display all episodes initially
+const state = {
+  episodes: [], // will store all episodes fetched from getAllEpisodes() function 
+  searchTerm: "", // tracks the search term entered by the user
+};
+
+const endpoint = " https://api.tvmaze.com/shows/82/episodes";
+
+const fetchFilms = async () => {
+  const response = await fetch(endpoint);
+  return await response.json();
+}; // Our async function returns a Promise
+
+fetchFilms().then((films) => {
+  // When the fetchFilms Promise resolves, this callback will be called.
+  state.films = films;
+  render();
+});
+
+async function setup() {
+  //Initialize the state will all episodes 
+  const films = await fetchFilms();
+  state.episodes = films;
+  //state.episodes = getAllEpisodes();
+  createSearchBar(); // create search bar and render the initial episodes
+  createSelectMenu(state.episodes); // Add the drop-down menu 
+  makePageForEpisodes(state.episodes); // Display all episodes 
 }
 
-// Function to display episodes
-function displayEpisodes(episodes) {
-  const episodesContainer = document.getElementById("root");
-  episodesContainer.innerHTML = ''; // Clear previous content
+// function to create drop-down 
+function createSelectMenu(episodes) {
+  const rootElem = document.getElementById("root");
 
+  // create the select element
+  const selectElem = document.createElement("select");
+  selectElem.id = "episode-select";
+
+  // add a show all episodes option 
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "all";
+  defaultOption.textContent = "Select All Episodes";
+  selectElem.appendChild(defaultOption);
+
+  // populate the select menu with episode options 
   episodes.forEach((episode) => {
-      const episodeHTML = `
-          <div class="episode-card"> 
-              <h3 class="title">${episode.name}<small><bold> : </bold>S0${episode.season}E0${episode.number}</small></h3>
-              <img src="${episode.image.medium}" alt="${episode.name}">
-              <div class="summary">${episode.summary}</div>
-              <p class="link">Click to watch <a href="${episode._links.self.href}">Episode</a></p> 
-          </div>
-      `;
-
-      episodesContainer.innerHTML += episodeHTML; // Append the episode HTML
+    const option = document.createElement("option");
+    option.value = episode.id; // use episode id as the value
+    option.textContent = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}-${episode.name}`;
+    selectElem.appendChild(option);
   });
+
+  // attach the select menu to the page
+  rootElem.insertBefore(selectElem, rootElem.firstChild);
+
+  // listen for changes to the drop-down 
+  selectElem.addEventListener("change", handleSelectChange);
 }
 
-//Drop down function
-function setup() {
-  const allEpisodes = getAllEpisodes(); // here i am fetshing all the episodes
-  const dropdown = document.getElementById("showDropDown");
+// event handler for the drop-down menu
+function handleSelectChange(event) {
+  const selectedValue = event.target.value;
 
-  // Populate dropdown
-  dropdown.innerHTML = '<option value="all">All Episodes</option>' +
-    allEpisodes.map((episode) => {
-      const code = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
-      return `<option value="${code}">${code} - ${episode.name}</option>`;
-    }).join(''); //This where i am populating the drop down with the required format,i used map() to iterate over the episode array and execute the episode selected
-    // i also used the join  to allow the strings chosen by map to be joined into a single string without any parameters, the episode season and the episode number string.
-  
-  dropdown.addEventListener("change", () => {//This is the event listener for the drop down.
-    const selected = dropdown.value;
-    const episodesToShow = selected === "all"
-      ? allEpisodes//containes all the episodes we have in our array. 
-      : allEpisodes.filter((ep) => `S${String(ep.season).padStart(2, "0")}E${String(ep.number).padStart(2, "0")}` === selected);
-    displayEpisodes(episodesToShow);
-  });
-  //Here i am determining wich epeisodes to show in the dropdown value(ALL), and filtering the slected one 
-
-  displayEpisodes(allEpisodes); 
-}
-
- 
-
- 
-//search functionality
-const input = document.querySelector("#q");
-
-if (input) {
-
-  input.addEventListener("input", function () {
-    const searchTerm = input.value.toLowerCase();
-
-    const allEpisodes = getAllEpisodes();
-
-    if(!allEpisodes || allEpisodes.length === 0) {
-      console.error("No episodes found.");
-      return;
+  if (selectedValue === "all") {
+    // show all episodes 
+    makePageForEpisodes(state.episodes);
+  } else { // find the selected episode
+    const selectedEpisode = state.episodes.find((episode) => episode.id.toString() === selectedValue);
+    if (selectedEpisode) {
+      makePageForEpisodes([selectedEpisode]); // display only the selected episode
     }
-
-
-    const filteredEpisodes = allEpisodes.filter((episode) => {
-
-      const formattedString = `S0${episode.season}E0${episode.number} - ${episode.name}`.toLowerCase();
-
-      return formattedString.includes(searchTerm);
-    });
-
-    displayEpisodes(filteredEpisodes);
-  });
+  }
 }
 
-// dropdown
 
- 
-//what i did in the search functiolanlity was: 
-//i selected the input element id "q";
-//I used an if stament to check if the input element exist in the DOM
-//Added an Event listner
-//I called back the the getAllEpisode Function to get a list of all episodes.
-//I check if the list of episodes is empty or undefined.
-//Filtered my episodes according to the requiremnts. 
-// I called back the display epidoes function to sho only filtered episodes 
+function createSearchBar() {
+  const rootElem = document.getElementById("root");
 
-window.onload = setup; // Call setup when the window loads
+  // search container 
+  const searchContainer = document.createElement("div");
+  searchContainer.id = "search-container";
+
+  //input field for searching 
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.id = "search-input";
+  searchInput.placeholder = "Search episodes by title or summary";
+
+  //paragraph to show number of matching episodes
+  const searchCount = document.createElement("p");
+  searchCount.id = "search-count";
+  searchCount.textContent = `Got ${state.episodes.length} episode(s)`;
+
+  // event listener to update search term and filter episodes 
+  searchInput.addEventListener("input", () => {
+    state.searchTerm = searchInput.value.toLowerCase();
+    const filteredEpisodes = filterEpisodes();
+    searchCount.textContent = `Got ${filteredEpisodes.length} episode(s)`;
+    makePageForEpisodes(filteredEpisodes)
+  });
+
+  //append elements to the search container 
+  searchContainer.appendChild(searchInput);
+  searchContainer.appendChild(searchCount);
+
+  //add the search container to the top of the root element
+  rootElem.prepend(searchContainer);
+}
+
+// function to filter episodes based on the search term 
+function filterEpisodes() {
+  const searchTerm = state.searchTerm;
+  return state.episodes.filter((episode) => episode.name.toLowerCase().includes(searchTerm) || (episode.summary && episode.summary.toLowerCase().includes(searchTerm)));
+}
+
+//function to render episodes 
+function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  const existingContainer = document.getElementById("episode-container");
+
+  //create or clear the episode container
+  episodeContainer = existingContainer || document.createElement("div");
+  episodeContainer.id = "episode-container";
+  episodeContainer.innerHTML = "";
+
+  //create cards for each episode
+  episodeList.forEach((episode) => {
+    const episodeCard = document.createElement("div");
+    episodeCard.className = "episode-card";
+
+    // episode title with formatted code
+    const episodeTitle = document.createElement('h3');
+    episodeTitle.textContent = `${episode.name} - ${formatEpisodeCode(episode.season, episode.number)}`;
+
+    const episodeImage = document.createElement('img');
+    episodeImage.src = episode.image?.medium || 'placeholder.jpg';
+    episodeImage.alt = episode.name;
+
+    const episodeSummary = document.createElement('p');
+    episodeSummary.innerHTML = episode.summary || 'No summary available.';
+
+    episodeCard.appendChild(episodeTitle);
+    episodeCard.appendChild(episodeImage);
+    episodeCard.appendChild(episodeSummary);
+
+
+    episodeContainer.appendChild(episodeCard);
+
+  });
+
+  if (!existingContainer) {
+    rootElem.appendChild(episodeContainer);
+  }
+
+}
+
+
+function formatEpisodeCode(season, number) {
+  return `S${String(season).padStart(2, '0')}E${String(number).padStart(2, '0')}`;
+}
+
+
+window.onload = setup;
