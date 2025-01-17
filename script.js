@@ -15,10 +15,12 @@ const fetchFilms = async () => {
     if(!response.ok){
       throw new Error("Failed to fetch episodes");
     }
-    return await response.json();
+    const data = await response.json();
 
     //clear the status message
-    document.getElementById("status").textContent = "";
+    document.querySelector("#status").textContent = "";
+
+    return data;
 
   }catch (error) {
 
