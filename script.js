@@ -136,10 +136,17 @@ function makePageForEpisodes(episodeList) {
 
     const episodeSummary = document.createElement('p');
     episodeSummary.innerHTML = episode.summary || 'No summary available.';
+    const episodeLink = document.createElement('a');
+    episodeLink.href = episode.url;
+    episodeLink.textContent = "Click to Watch";
+    episodeLink.target = "_blank";
+
+
 
     episodeCard.appendChild(episodeTitle);
     episodeCard.appendChild(episodeImage);
     episodeCard.appendChild(episodeSummary);
+    episodeCard.appendChild(episodeLink);
 
 
     episodeContainer.appendChild(episodeCard);
