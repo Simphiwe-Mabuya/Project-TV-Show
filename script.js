@@ -32,18 +32,19 @@ function setup() {
     allEpisodes.map((episode) => {
       const code = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
       return `<option value="${code}">${code} - ${episode.name}</option>`;
-    }).join(''); //This where i am populating the drop down with the required format,i used map() to iterate over the episode array and execute the episode select
-                 // i also used the join  to allow the strings chosen by map to be joined into a single string without any parameters, the episode season and the episode number string.
+    }).join(''); //This where i am populating the drop down with the required format,i used map() to iterate over the episode array and execute the episode selected
+    // i also used the join  to allow the strings chosen by map to be joined into a single string without any parameters, the episode season and the episode number string.
   
-  dropdown.addEventListener("change", () => {//This is the event listener for the drop down, 
+  dropdown.addEventListener("change", () => {//This is the event listener for the drop down.
     const selected = dropdown.value;
     const episodesToShow = selected === "all"
-      ? allEpisodes
+      ? allEpisodes//containes all the episodes we have in our array. 
       : allEpisodes.filter((ep) => `S${String(ep.season).padStart(2, "0")}E${String(ep.number).padStart(2, "0")}` === selected);
     displayEpisodes(episodesToShow);
   });
+  //Here i am determining wich epeisodes to show in the dropdown value(ALL), and filtering the slected one 
 
-  displayEpisodes(allEpisodes); // Show all episodes by default
+  displayEpisodes(allEpisodes); 
 }
 
  
