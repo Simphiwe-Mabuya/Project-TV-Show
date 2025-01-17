@@ -7,13 +7,22 @@ const endpoint = " https://api.tvmaze.com/shows/82/episodes";
 
 const fetchFilms = async () => {
   try {
+    //Show loading status 
+    document.getElementById("status").textContent = "Loading episodes, please wait..."
+
     const response = await fetch(endpoint);
 
     if(!response.ok){
       throw new Error("Failed to fetch episodes");
     }
     return await response.json();
+
+    //clear the status message
+    document.getElementById("status").textContent = "";
+
   }catch (error) {
+
+    document.getElementById("status").textContent = "Error fetching episodes. Please try again later.";
     alert("Error fetching episodes:", error);
     return [];
   }
