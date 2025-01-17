@@ -6,8 +6,18 @@ const state = {
 const endpoint = " https://api.tvmaze.com/shows/82/episodes";
 
 const fetchFilms = async () => {
-  const response = await fetch(endpoint);
-  return await response.json();
+  try {
+    const response = await fetch(endpoint);
+
+    if(!response.ok){
+      throw new Error("Failed to fetch episodes");
+    }
+    return await response.json();
+  }catch (error) {
+    alert("Error fetching episodes:", error);
+    return [];
+  }
+
 }; // Our async function returns a Promise
 
 fetchFilms().then((films) => {
