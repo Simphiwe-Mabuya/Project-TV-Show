@@ -1,32 +1,61 @@
 #root {
-  color: black;
-  display: grid; /* Make the root a grid container */
-  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  justify-items: center;
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
 }
-
-.episode {
-  width: 65%;
-  margin: 20px 10px;
-  padding: 25px;
+/*am stting up the root container so i can have the space for the heading and search bar*/
+.episode-card{
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding:1.5rem;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0.1);
 }
 
 .episode img {
   max-width: 100%;
   height: auto;
   margin: 5px;
-}
+}                                                             
 
 .episode h3 {
   text-align: center;
+  font-size: 1.2rem;
+  
 }
 
 .episode p a {
   text-decoration: none;
 } 
+
+ 
+.summary {                                                 
+  line-height: 1.5;
+  font-size: 16px; 
+  text-align: justify; 
+
+} /*this makes the summary text more readable */
+/*align and organsing the text*/
+
+ 
+.title {
+font-size: 1rem;
+display: inline-block; /*fitting the text in the border*/
+padding: 10px 20px; /*creating space inside the border*/
+border: 2px solid #333; /*colour and thickness*/
+border-radius: 5px; /*rounded conners that have the title*/
+margin: 0.5rem 0;
+background-color: #f4f4f4;
+
+}
+
+.link{
+  text-align: left;
+}
+/*aligning the link class to match the text*/
 
 @media (max-width: 768px) {
   #root {
@@ -35,6 +64,7 @@
   .episode img {
   max-width: 100%;
   height: auto;
+  border-radius: 5px;
 }
 }
 
