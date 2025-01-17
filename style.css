@@ -1,84 +1,68 @@
-#root {
+#episode-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
-/*am stting up the root container so i can have the space for the heading and search bar*/
-.episode-card{
+
+#search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -3rem;
+}
+
+#search-input {
+  width: 17%;
+  padding: 5px;
+}
+
+#episode-select {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+#search-count {
+  margin-top: 6rem;
+  margin-left: -11.50rem;
+}
+
+.episode-card {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding:1.5rem;
+  padding: 1.5rem; /* Padding for the card */
   max-width: 300px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.episode img {
+.episode-card img {
   max-width: 100%;
-  height: auto;
-  margin: 5px;
-}                                                             
-
-.episode h3 {
-  text-align: center;
-  font-size: 1.2rem;
-  
-}
-
-.episode p a {
-  text-decoration: none;
-} 
-
- 
-.summary {                                                 
-  line-height: 1.5;
-  font-size: 16px; 
-  text-align: justify; 
-
-} /*this makes the summary text more readable */
-/*align and organsing the text*/
-
- 
-.title {
-font-size: 1rem;
-display: inline-block; /*fitting the text in the border*/
-padding: 10px 20px; /*creating space inside the border*/
-border: 2px solid #333; /*colour and thickness*/
-border-radius: 5px; /*rounded conners that have the title*/
-margin: 0.5rem 0;
-background-color: #f4f4f4;
-
-}
-
-.link{
-  text-align: left;
-}
-/*aligning the link class to match the text*/
-
-@media (max-width: 768px) {
-  #root {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
-  } 
-  .episode img {
-  max-width: 100%;
-  height: auto;
   border-radius: 5px;
 }
+
+.episode-card h3 {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem; /* Added padding for the title */
+  background-color: #f0f0f0; /* Optional: background color for better visibility */
+  border-radius: 3px; /* Optional: rounded corners for the title background */
 }
 
-@media (max-width: 480px) {
-  #root {
-    grid-template-columns: 1fr; /* 1 column for small screens */
-  }
-
-  .episode img {
-  max-width: 100%;
-  height: auto;
+.episode-card p {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
 }
 
-  .episode {
-    width: 60%; /* Make each episode take full width */
-  }
+.episode-card a {
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+p {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
